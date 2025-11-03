@@ -10,22 +10,22 @@ def suzhou_digit(i, /, alt=False):
     else:
         raise ValueError
 
-def suzhou_numeral_value(i, /):
-    if i == '〇':
+def suzhou_digit_value(c, /):
+    if c == '〇':
         return 0
-    elif i == '一':
+    elif c == '一':
         return 1
-    elif i == '二':
+    elif c == '二':
         return 2
-    elif i == '三':
+    elif c == '三':
         return 3
-    elif '〡' <= i <= '〩':
-        return ord(i) - 0x3020
-    elif i in '〸十':
+    elif '〡' <= c <= '〩':
+        return ord(c) - 0x3020
+    elif c in '〸十':
         return 10
-    elif i in '〹卄':
+    elif c in '〹卄':
         return 20
-    elif i in '〺卅':
+    elif c in '〺卅':
         return 30
     else:
         return ValueError
@@ -103,9 +103,9 @@ def suzhou(x, /, n=None, mag=False, trim_0=True, sign_prefix='－', decimal_poin
         
         return returned
 
-def suzhou_to_type(x, /, type_=int):
-    x = x.splitlines()
-    line0 = x[0]
+def suzhou_to_type(s, /, type_=int):
+    s = s.splitlines()
+    line0 = s[0]
     
     if line0[0] in '-－':
         line0 = line0[1:]
@@ -120,8 +120,8 @@ def suzhou_to_type(x, /, type_=int):
             strip = False
     
     shift = 0
-    if len(x) >= 2:
-        line1 = x[1]
+    if len(s) >= 2:
+        line1 = s[1]
         
         if strip:
             line1 = line1[1:]
@@ -151,7 +151,7 @@ def suzhou_to_type(x, /, type_=int):
             if i in '.．':
                 continue
             
-            returned = f'{returned}{suzhou_numeral_value(i)}'
+            returned = f'{returned}{suzhou_digit_value(i)}'
             if shift == 0:
                 returned += '.'
             
@@ -159,10 +159,10 @@ def suzhou_to_type(x, /, type_=int):
         
         return type_(f'{"-" if negative else ""}{returned}{"0" * (shift + 1)}')
     else:
-        return type_(f'{"-" if negative else ""}{"".join("." if i in ".．" else str(suzhou_numeral_value(i)) for i in line0)}')
+        return type_(f'{"-" if negative else ""}{"".join("." if i in ".．" else str(suzhou_digit_value(i)) for i in line0)}')
 
-def suzhou_to_int(x, /):
-    return suzhou_to_type(x)
+def suzhou_to_int(s, /):
+    return suzhou_to_type(s)
 
-def suzhou_to_decimal_str(x, /):
-    return suzhou_to_type(x, str)
+def suzhou_to_decimal_str(s, /):
+    return suzhou_to_type(s, str)
