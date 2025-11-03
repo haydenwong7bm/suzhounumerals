@@ -18,7 +18,7 @@
  
 ## Example
  ```python
- >>> from decimal import Context, Decimal, ROUND_HALF_EVEN
+ >>> from decimal import Decimal
  >>> from suzhou import *
  >>> i = suzhou(5201314)
  >>> print(i)
