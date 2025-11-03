@@ -1,8 +1,4 @@
-from numbers import Real
-
-__all__ = ['suzhou_digit', 'suzhou_numeral_value', 'suzhou', 'to_numeric_type', 'to_int', 'to_decimal_str']
-
-def suzhou_digit(i: int, /, alt: bool = False) -> str:
+def suzhou_digit(i, /, alt=False):
     if i == 0:
         return '〇'
     elif 1 <= i <= 3 and alt:
@@ -14,7 +10,7 @@ def suzhou_digit(i: int, /, alt: bool = False) -> str:
     else:
         raise ValueError
 
-def suzhou_numeral_value(i: str, /) -> int:
+def suzhou_numeral_value(i, /):
     if i == '〇':
         return 0
     elif i == '一':
@@ -53,7 +49,7 @@ TEN = suzhou_digit(10)
 TWENTY = suzhou_digit(20)
 THIRTY = suzhou_digit(30)
 
-def suzhou(x: Real, /, n: int = None, mag: bool = False, trim_0: bool = True, sign_prefix: str = '－', decimal_point: str = '．') -> str:
+def suzhou(x, /, n=None, mag=False, trim_0=True, sign_prefix='－', decimal_point='．'):
     if isinstance(x, str):
         sign_prefix = sign_prefix if x[0] == '-' else ''
         x = x.lstrip('-+')
@@ -107,7 +103,7 @@ def suzhou(x: Real, /, n: int = None, mag: bool = False, trim_0: bool = True, si
         
         return returned
 
-def to_numeric_type(x: str, /, type_: type = int):
+def suzhou_to_type(x, /, type_=int):
     x = x.splitlines()
     line0 = x[0]
     
@@ -165,8 +161,8 @@ def to_numeric_type(x: str, /, type_: type = int):
     else:
         return type_(f'{"-" if negative else ""}{"".join("." if i in ".．" else str(suzhou_numeral_value(i)) for i in line0)}')
 
-def to_int(x: str, /) -> int:
-    return to_numeric_type(x)
+def suzhou_to_int(x, /):
+    return suzhou_to_type(x)
 
-def to_decimal_str(x: str, /) -> str:
-    return to_numeric_type(x, str)
+def suzhou_to_decimal_str(x, /):
+    return suzhou_to_type(x, str)
