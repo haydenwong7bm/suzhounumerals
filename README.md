@@ -4,11 +4,11 @@
 ## Usage
 
 ### Functions
- * `suzhou(x, /)`: Returns the suzhou numeral string of a number `x`.
+ * `suzhou(x, /)`: Returns the suzhou numeral string representation of a number `x`.
  * `suzhou_to_type(s, /, type_=int)`: Returns the numeric value in `type` of the suzhou numeral string `s`.
  * `suzhou_to_int(s, /)`: Returns the numeric value in `int` of the suzhou numeral string `s`.
  * `suzhou_to_decimal_str(s, /)`: Returns the numeric value string of the suzhou numeral string `s`.
- * `suzhou_digit(i, /, alt=False)`: Returns the suzhou digit of a integer `i`.
+ * `suzhou_digit(i, /, alt=False)`: Returns the suzhou numeral digit of an integer `i`.
  * `suzhou_digit_value(c, /, alt=False)`: Returns the numeric value of a suzhou digit character `c`, where `alt` specifies whether to use alternate digits or not (for digits 1 to 3).
  
 ### Constants
@@ -27,7 +27,7 @@
  >>> print(f)
  〇．〡一〤〥〡〤〡〩〡〩〨〡〇
  >>> suzhou_to_int(i)
- >>> 5201314
+ 5201314
  >>> _ + suzhou_to_type(f, Decimal)
  Decimal('5201314.1145141919810')
  ```
