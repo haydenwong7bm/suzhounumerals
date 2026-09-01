@@ -1,34 +1,26 @@
+__all__ = ['ZERO', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'ONE_ALT', 'TWO_ALT', 'THREE_ALT', 'TEN', 'TWENTY', 'THIRTY', 'suzhou_digit', 'suzhou_digit_value', 'suzhou', 'suzhou_to_type', 'suzhou_to_int', 'suzhou_to_decimal_str']
+
+_SUZHOU_DIGIT = {
+    0: '〇', 1: '〡', 2: '〢', 3: '〣', 4: '〤',
+    5: '〥', 6: '〦', 7: '〧', 8: '〨', 9: '〩',
+    10: '〸', 20: '〹', 30: '〺'
+}
+
 def suzhou_digit(i, /, alt=False):
-    if i == 0:
-        return '〇'
-    elif 1 <= i <= 3 and alt:
+    if alt and 1 <= i <= 3:
         return '一二三'[i - 1]
-    elif 1 <= i <= 9:
-        return chr(0x3020 + i)
-    elif i in {10, 20, 30}:
-        return '〸〹〺'[i // 10 - 1]
     else:
-        raise ValueError
+        return _SUZHOU_DIGIT[i]
+
+_SUZHOU_DIGIT_VALUE = {
+    '〇': 0, '〡': 1, '〢': 2, '〣': 3, '〤': 4,
+    '〥': 5, '〦': 6, '〧': 7, '〨': 8, '〩': 9,
+    '〸': 10, '十': 10, '〹': 20, '卄': 20, '〺': 30, '卅': 30,
+    '一': 1, '二': 2, '三': 3
+}
 
 def suzhou_digit_value(c, /):
-    if c == '〇':
-        return 0
-    elif c == '一':
-        return 1
-    elif c == '二':
-        return 2
-    elif c == '三':
-        return 3
-    elif '〡' <= c <= '〩':
-        return ord(c) - 0x3020
-    elif c in '〸十':
-        return 10
-    elif c in '〹卄':
-        return 20
-    elif c in '〺卅':
-        return 30
-    else:
-        return ValueError
+    return _SUZHOU_DIGIT_VALUE[c]
 
 ZERO = suzhou_digit(0)
 ONE = suzhou_digit(1)
